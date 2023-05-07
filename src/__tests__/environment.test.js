@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import {fileURLToPath} from 'url';
+import {getDirname} from '../utils.js';
 import {test, expect, describe} from '@jest/globals';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = getDirname(import.meta.url);
 
 describe('Runtime environment', () => {
   test('if __dirname is correct', () => {

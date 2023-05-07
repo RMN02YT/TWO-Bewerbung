@@ -1,13 +1,16 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'url';
 import {test, describe, expect} from '@jest/globals';
-import {deployCommands} from '../deploy-commands.js';
+import {deployCommands, getCommandFiles, getCommandData} from '../deploy-commands.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 describe('Commands', () => {
-  const commandFiles = fs.readdirSync(path.join(__dirname, '../', 'commands')).filter((file) => file.endsWith('.js'));
+  const commandFiles = getCommandFiles();
+
+  test('if command files can be found', () => {
+    expect(commandFiles).not.toHaveLength(0);
+  });
 
   test('if all commands are valid', () => {
     commandFiles.forEach(async (file) => {
@@ -29,6 +32,22 @@ describe('Commands', () => {
     });
 
     expect(commandNames).toEqual([...new Set(commandNames)]);
+  });
+
+  test('if command-data can be fetched', () => {
+    const fp = path.join(__dirname, '../', 'commands', commandFiles.at(0));
+    getCommandData(fp).then((data) => {
+      expect(data).not.toBe(null);
+    });
+
+    getCommandData('invalid-file-path').then((data) => {
+      expect(data).toBe(null);
+    });
+
+    const mockfilepaths = path.join(__dirname, '../', '__tests__', 'mock_cmd.js');
+    getCommandData(mockfilepaths).then((data) => {
+      expect(data).toBe(null);
+    });
   });
 
   test('if all commands are deployable', () => {

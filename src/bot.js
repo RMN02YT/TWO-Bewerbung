@@ -11,7 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {Client, Events} from 'discord.js';
-import {fileURLToPath} from 'url';
+import {getDirname} from './utils.js';
 import token from '../data/config.json' assert {type: 'json'};
 
 /**
@@ -33,7 +33,7 @@ export function startBot() {
 
   client.commands = [];
 
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const __dirname = getDirname(import.meta.url);
   const commandFiles = fs.readdirSync(path.join(__dirname, 'commands')).filter((file) => file.endsWith('.js'));
 
 
