@@ -18,9 +18,9 @@ import guildId from '../data/config.json' assert {type: 'json'};
 /**
  * The function to deploy Slash commands to discord
  * @function deployCommands
-  * @return {void}
+  * @return {Array} commands
  */
-export function deployCommands() {
+export async function deployCommands() {
   const commands = [];
 
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -41,7 +41,7 @@ export function deployCommands() {
 
   const rest = new REST().setToken(token);
 
-  (async () => {
+  await (async () => {
     try {
       console.log(`Refreshing ${commands.length} commands`);
 
@@ -55,4 +55,5 @@ export function deployCommands() {
       console.log(e);
     }
   })();
+  return commands;
 }
