@@ -14,9 +14,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {REST, Routes} from 'discord.js';
 import {getDirname} from './utils.js';
-import token from '../data/config.json' assert {type: 'json'};
-import clientId from '../data/config.json' assert {type: 'json'};
-import guildId from '../data/config.json' assert {type: 'json'};
+import data from '../data/config.json' assert {type: 'json'};
+
 
 /**
  * Function to get the list of command files
@@ -45,28 +44,39 @@ export async function getCommandData(filePath) {
 
 /**
  * Function to deploy the commands
+ * @function deployCommands
+ * @param {boolean} useEnv Whether to use the environment variables
+ * @param {pino.Logger} logger The logger
  * @return {Promise<JSON>} The JSON data of the commands that were deployed
  */
-export async function deployCommands() {
+export async function deployCommands(useEnv = false, logger) {
+  const component ='deploy';
+  logger.info(component, 'Deploying commands');
+  useEnv ? logger.info(component, 'Using environment variables') : logger.info(component, 'Using config.json');
+  const t = useEnv ? process.env.BOT_TOKEN : data.token;
+  const c = useEnv ? process.env.CLIENT_ID : data.clientId;
+  const g = useEnv ? process.env.GUILD_ID : data.guildId;
+
   const commands = [];
   const __dirname = getDirname(import.meta.url);
   const commandFiles = getCommandFiles();
-  console.log(`Found ${commandFiles.length} commands`);
+  logger.info(component, `Found ${commandFiles.length} command file${commandFiles.length === 1 ? '' : 's'}`);
+
   for (const file of commandFiles) {
-    const filePath = path.join(__dirname, 'commands', file);
+    const filePath = path.join('file://', __dirname, 'commands', file);
     const commandData = await getCommandData(filePath);
     if (commandData) {
       commands.push(commandData);
     }
   }
-  const rest = new REST().setToken(token);
+  const rest = new REST().setToken(t);
   try {
-    console.log(`Refreshing ${commands.length} commands`);
+    logger.info(component, `Refreshing ${commands.length} commands`);
     const data = await rest.put(
-        Routes.applicationGuildCommands(clientId, guildId),
+        Routes.applicationGuildCommands(c, g),
         {body: commands},
     );
-    console.log(`Successfully reloaded ${data.length} commands`);
+    logger.info(component, 'Successfully refreshed application (/) commands.', data);
     return commands;
   } catch (e) {
     throw new Error(e);

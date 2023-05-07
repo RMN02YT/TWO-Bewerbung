@@ -1,3 +1,34 @@
 [
-    
+    {
+        "question": "Wie ist dein echter Name? [Beispiel: Max Mustermann]",
+        "type": "text"
+    },
+    {
+        "question": "Welche Pizzasorte ist deine Lieblingssorte?",
+        "type": "multiple_choice",
+        "answers":[
+            "Salami",
+            "Schinken",
+            "Thunfisch",
+            "Hawaii",
+            "Margherita",
+            "Pepperoni"
+        ]
+    },
+    {
+        "question": "Wie alt bist du? [Clan nur für Ü18!]",
+        "type": "number"
+    },
+    {
+        "question": "Wie ist dein aktueller Nametag in R6? [Smurfs können auch angegeben werden!]",
+        "type": "text"
+    },
+    {
+        "question": "Auf welcher Elo bewegst du dich in R6? [Mindestens Silber!]",
+        "type": "text"
+    },
+    {
+        "question": "Wie lange bist du am Tag durchschnittlich Online? [In Stunden!]",
+        "type": "text"
+    }
 ]
