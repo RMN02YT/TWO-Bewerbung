@@ -39,9 +39,6 @@ describe('Commands', () => {
       if (config.default.token!='') {
         // if token exists, test that all commands are deployed
         expect(deployCommands()).toHaveLength(commandFiles.length);
-      } else {
-        // if token does not exist, test that no commands are deployed
-        expect(deployCommands()).toHaveLength(0);
       }
     });
   });

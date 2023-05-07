@@ -32,8 +32,8 @@ export function deployCommands() {
     const command = await import(fp);
 
     if ('data' in command && 'execute' in command) {
+      console.log(`Adding command ${command.data.name} to be deployed`);
       commands.push(command.data.toJSON());
-      console.log(`Added command ${command.data.name} to be deployed`);
     } else {
       console.log(`Invalid command file ${fp}`);
     }
