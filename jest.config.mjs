@@ -25,7 +25,7 @@ export default {
 
   // An array of regexp pattern strings used to skip coverage collection
   coveragePathIgnorePatterns: [
-    '\\\\node_modules\\\\',
+    // '\\\\node_modules\\\\',
     '\\\\__tests__\\\\',
   ],
 
