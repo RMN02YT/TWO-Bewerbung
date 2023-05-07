@@ -19,7 +19,8 @@ export default {
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
-    'src/**/!(mock_cmd)*.{js,jsx,mjs}',
+    'src/**/*.{js,jsx,mjs}',
+    '!src/**/mock_cmd.js',
   ],
 
   // The directory where Jest should output its coverage files
