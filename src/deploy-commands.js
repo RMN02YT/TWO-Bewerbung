@@ -18,30 +18,29 @@ import guildId from '../data/config.json' assert {type: 'json'};
 /**
  * The function to deploy Slash commands to discord
  * @function deployCommands
-  * @return {Array} commands
+ * @return {Array} commands
  */
-export async function deployCommands() {
+export function deployCommands() {
   const commands = [];
 
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  console.log(__dirname);
   const commandFiles = fs.readdirSync(path.join(__dirname, 'commands')).filter((file) => file.endsWith('.js'));
+  console.log(`Found ${commandFiles.length} commands`);
 
-  commandFiles.forEach((file) => {
+  commandFiles.forEach(async (file) => {
     const fp = path.join(__dirname, 'commands', file);
-    const command = import(fp);
+    const command = await import(fp);
 
     if ('data' in command && 'execute' in command) {
       commands.push(command.data.toJSON());
-      console.log(command.data.toJSON());
+      console.log(`Added command ${command.data.name} to be deployed`);
     } else {
       console.log(`Invalid command file ${fp}`);
     }
   });
-
   const rest = new REST().setToken(token);
 
-  await (async () => {
+  (async () => {
     try {
       console.log(`Refreshing ${commands.length} commands`);
 
@@ -52,7 +51,7 @@ export async function deployCommands() {
 
       console.log(`Successfully reloaded ${data.length} commands`);
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   })();
   return commands;

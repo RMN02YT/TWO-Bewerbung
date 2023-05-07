@@ -7,7 +7,7 @@
   "scripts": {
     "deploy-cmds": "node ./src/deploy-commands.js",
     "start": "node ./src/index.js",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "cross-env NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "author": "",
   "license": "ISC",
