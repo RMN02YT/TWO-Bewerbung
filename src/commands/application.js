@@ -17,26 +17,26 @@ module.exports = {
 
     // next we create a dm channel with the user and ask them the questions
     /**
-         * @type {DMChannel}
-         */
+             * @type {DMChannel}
+             */
     const slidinIntoThoseDMs = await i.user.createDM();
 
     // load the questions from ../data/questions.json
     /**
-         * Questions.json
-         * @typedef {Object} Question
-         * @property {string} question - The question to ask
-         * @property {string} type - The type of question (text, number, multiple choice, etc)
-         * @property {string[]} answers - The answers to the question (if multiple choice)
-        */
+             * Questions.json
+             * @typedef {Object} Question
+             * @property {string} question - The question to ask
+             * @property {string} type - The type of question (text, number, multiple choice, etc)
+             * @property {string[]} answers - The answers to the question (if multiple choice)
+            */
 
     /**
-         * @type {Question[]}
-         */
+             * @type {Question[]}
+             */
     const questions = JSON.parse(fs.readFileSync('../data/questions.json'));
     /**
-         * @type {string[]}
-         */
+             * @type {string[]}
+             */
     const answers = [];
 
     // ask each question and wait for a response before moving on to the next one
