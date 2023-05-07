@@ -1,6 +1,9 @@
 const fs = require('node:fs');
 const {SlashCommandBuilder, EmbedBuilder} = require('discord.js');
 
+// TODO: add automatic r6api lookup
+// TODO: make the embeds look nicer
+
 module.exports = {
   data: new SlashCommandBuilder()
       .setName('apply')

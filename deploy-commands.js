@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 const fs = require('node:fs');
 const path = require('node:path');
 const {REST, Routes} = require('discord.js');
