@@ -17,6 +17,8 @@
     "r6api.js": "^4.4.1"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.21.8",
+    "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "eslint": "^8.40.0",
     "eslint-config-google": "^0.14.0"
   }
