@@ -34,7 +34,6 @@ export function startBot() {
   client.commands = [];
 
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  console.log(__dirname);
   const commandFiles = fs.readdirSync(path.join(__dirname, 'commands')).filter((file) => file.endsWith('.js'));
 
 
