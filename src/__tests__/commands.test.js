@@ -59,7 +59,7 @@ describe('Commands', () => {
       if (config.default.token!='') {
         // if token exists, test that all commands are deployed
         const logger = new BotLogger();
-        expect(deployCommands(false, logger)).toHaveLength(commandFiles.length);
+        expect(deployCommands(true, logger)).toHaveLength(commandFiles.length);
       }
     });
   });
