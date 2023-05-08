@@ -23,6 +23,7 @@ jobs:
         CLIENT_ID: ${{ secrets.CID }}
         GUILD_ID: ${{ secrets.GID }}
         ACTIONS: true
+        ACTIONS: true
       with:
         node-version: 18.x
         cache: 'npm'
