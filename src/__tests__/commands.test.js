@@ -51,7 +51,7 @@ describe('Commands', () => {
     });
   });
 
-  if (!process.env.ACTION) {
+  if (process.env.ACTION) {
     // don't run this test in github actions since its cursed and doesn't work
     test('if all commands are deployable', () => {
       import('../../data/config.json', {
