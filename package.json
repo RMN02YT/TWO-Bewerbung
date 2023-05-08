@@ -7,7 +7,8 @@
   "scripts": {
     "deploy-cmds": "node ./src/deploy-commands.js",
     "start": "node ./src/index.js",
-    "test": "cross-env NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "cross-env NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules jest",
+    "test-ci": "cross-env NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules jest --reporters='@matteoh2o1999/github-actions-jest-reporter'"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.8",
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
+    "@matteoh2o1999/github-actions-jest-reporter": "^1.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.40.0",
     "eslint-config-google": "^0.14.0",
