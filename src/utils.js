@@ -41,10 +41,10 @@ export class BotLogger {
     this.levels = ['info', 'debug', 'warn', 'error'];
     this.components = ['main', 'bot', 'deploy', 'command'];
     this.logger.level = 'info';
-    this.logger.addLevel('warn', 2000, { fg: 'yellow', bold: true });
-    this.logger.addLevel('error', 2500, { fg: 'red', bold: true });
-    this.logger.addLevel('debug', 1500, { fg: 'blue', bold: true });
-    this.logger.addLevel('info', 1000, { fg: 'green', bold: true });
+    this.logger.addLevel('warn', 2000, {fg: 'yellow', bold: true});
+    this.logger.addLevel('error', 2500, {fg: 'red', bold: true});
+    this.logger.addLevel('debug', 1500, {fg: 'blue', bold: true});
+    this.logger.addLevel('info', 1000, {fg: 'green', bold: true});
     this.pstyles = [
       [
         (x) => {
