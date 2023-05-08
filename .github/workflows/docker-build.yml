@@ -36,16 +36,16 @@ jobs:
           context: .
           push: true
           tags: minemotv/bewerbungsbot:latest
-    deploy:
-      runs-on: ubuntu-latest
-      needs: build
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v2      
-      - name: Announce deployment
-        env:
-        run: |
-          curl -X POST \
-          -H "Content-Type: application/json" \
-          -d '{"environment": "production", "commit": "'"$GITHUB_SHA"'"}' \
-          ${{ secrets.SERVER_URL }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2      
+    - name: Announce deployment
+      env:
+      run: |
+        curl -X POST \
+        -H "Content-Type: application/json" \
+        -d '{"environment": "production", "commit": "'"$GITHUB_SHA"'"}' \
+        ${{ secrets.SERVER_URL }}
