@@ -46,7 +46,7 @@ export async function getCommandData(filePath) {
  * Function to deploy the commands
  * @function deployCommands
  * @param {boolean} useEnv Whether to use the environment variables
- * @param {pino.Logger} logger The logger
+ * @param {BotLogger} logger The logger
  * @return {Promise<JSON>} The JSON data of the commands that were deployed
  */
 export async function deployCommands(useEnv = false, logger) {

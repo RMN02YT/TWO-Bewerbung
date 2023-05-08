@@ -1,5 +1,6 @@
 import path from 'node:path';
 import {fileURLToPath} from 'url';
+import {BotLogger} from '../utils.js';
 import {test, describe, expect} from '@jest/globals';
 import {deployCommands, getCommandFiles, getCommandData} from '../deploy-commands.js';
 
@@ -57,7 +58,8 @@ describe('Commands', () => {
         }}).then((config) => {
       if (config.default.token!='') {
         // if token exists, test that all commands are deployed
-        expect(deployCommands()).toHaveLength(commandFiles.length);
+        const logger = new BotLogger();
+        expect(deployCommands(false, logger)).toHaveLength(commandFiles.length);
       }
     });
   });
