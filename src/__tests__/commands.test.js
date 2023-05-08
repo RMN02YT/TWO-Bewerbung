@@ -5,15 +5,14 @@ import {test, describe, expect} from '@jest/globals';
 import {deployCommands, getCommandFiles, getCommandData} from '../deploy-commands.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const commandFiles = getCommandFiles(path.join(__dirname, '../', 'commands'));
 
 describe('Commands', () => {
-  const commandFiles = getCommandFiles(path.join(__dirname, '../', 'commands'));
-
-  test('if command files can be found', () => {
+  test('Files can be found', () => {
     expect(commandFiles).not.toHaveLength(0);
   });
 
-  test('if all commands are valid', () => {
+  test('Are all valid', () => {
     commandFiles.forEach(async (file) => {
       const fp = path.join(__dirname, '../', 'commands', file);
       const command = await import(fp);
@@ -22,7 +21,7 @@ describe('Commands', () => {
     });
   });
 
-  test('if all commands have a unique name', () => {
+  test('Have unique names', () => {
     const commandNames = [];
 
     commandFiles.forEach(async (file) => {
@@ -35,7 +34,7 @@ describe('Commands', () => {
     expect(commandNames).toEqual([...new Set(commandNames)]);
   });
 
-  test('if command-data can be fetched', () => {
+  test('Data can be fetched', () => {
     const fp = path.join(__dirname, '../', 'commands', commandFiles.at(0));
     getCommandData(fp).then((data) => {
       expect(data).not.toBe(null);
@@ -51,21 +50,21 @@ describe('Commands', () => {
     });
   });
 
-  if (process.env.ACTION) {
-    // don't run this test in github actions since its cursed and doesn't work
-    test('if all commands are deployable', () => {
-      import('../../data/config.json', {
-          assert: {
-          type: 'json',
-          }}).then((config) => {
-        if (config.default.token!='') {
+  test('Deploying commands works', () => {
+    import('../../data/config.json', {
+        assert: {
+        type: 'json',
+        }}).then((config) => {
+      if (config.default.token!='') {
         // if token exists, test that all commands are deployed
-          const logger = new BotLogger();
-          deployCommands(false, logger).then((data) => {
-            expect(data).toHaveLength(commandFiles.length);
-          });
-        }
-      });
+        // if tests are done through github actions, use environment variables instead
+
+        const useenv = process.env.ACTIONS == '1';
+        const logger = new BotLogger();
+        deployCommands(useenv, logger).then((data) => {
+          expect(data).toHaveLength(commandFiles.length);
+        });
+      }
     });
-  }
+  });
 });

@@ -15,6 +15,12 @@ describe('Runtime environment', () => {
     expect(fs.existsSync(path.join(__dirname, '../../', 'data', 'config.json'))).toBe(true);
   });
 
+  test('if questions.json exists', () => {
+    expect(fs.existsSync(path.join(__dirname, '../../', 'data', 'questions.json'))).toBe(true);
+  });
+});
+
+describe('Validity of configs', () => {
   test('if config.json is valid JSON', () => {
     expect(() => {
       import('../../data/config.json', {
@@ -23,10 +29,6 @@ describe('Runtime environment', () => {
           },
           });
     }).not.toThrow();
-  });
-
-  test('if questions.json exists', () => {
-    expect(fs.existsSync(path.join(__dirname, '../../', 'data', 'questions.json'))).toBe(true);
   });
 
   test('if questions.json is valid JSON', () => {
