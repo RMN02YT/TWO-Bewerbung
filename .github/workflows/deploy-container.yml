@@ -5,15 +5,15 @@ on:
     branches: [main]
 
 env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
   BOT_TOKEN: ${{ secrets.TOKEN }}
   CLIENT_ID: ${{ secrets.CID }}
   GUILD_ID: ${{ secrets.GID }}
 
 jobs:
   test:
-
       runs-on: ubuntu-latest
-
       steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -31,17 +31,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v2
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: minemotv/bewerbungsbot:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -52,5 +59,5 @@ jobs:
       run: |
         curl -X POST \
         -H "Content-Type: application/json" \
-        -d '{"environment": "production", "commit": "'"$GITHUB_SHA"'"}' \
+        -d '{"environment": "production", "commit": "'"$GITHUB_SHA"'", "container-location": "'${{ env.REGISTRY }}/${{ github.GITHUB_REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:latest'"}' \
         ${{ secrets.SERVER_URL }}
