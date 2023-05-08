@@ -19,11 +19,11 @@ import data from '../data/config.json' assert {type: 'json'};
 
 /**
  * Function to get the list of command files
+ * @param {fs.PathLike} dir The directory to search in
  * @return {string[]} The list of command files
  */
-export function getCommandFiles() {
-  const __dirname = getDirname(import.meta.url);
-  return fs.readdirSync(path.join(__dirname, 'commands')).filter((file) => file.endsWith('.js'));
+export function getCommandFiles(dir) {
+  return fs.readdirSync(dir).filter((file) => file.endsWith('.js'));
 }
 
 /**
@@ -59,12 +59,13 @@ export async function deployCommands(useEnv = false, logger) {
 
   const commands = [];
   const __dirname = getDirname(import.meta.url);
-  const commandFiles = getCommandFiles();
+  const commandFiles = getCommandFiles(path.join(__dirname, 'commands'));
   logger.info(component, `Found ${commandFiles.length} command file${commandFiles.length === 1 ? '' : 's'}`);
 
   for (const file of commandFiles) {
-    const filePath = path.join('file://', __dirname, 'commands', file);
+    const filePath = path.join(__dirname, 'commands', file);
     const commandData = await getCommandData(filePath);
+    logger.info(component, `Loaded command ${commandData.name}`);
     if (commandData) {
       commands.push(commandData);
     }
@@ -79,7 +80,8 @@ export async function deployCommands(useEnv = false, logger) {
     logger.info(component, 'Successfully refreshed application (/) commands.', data);
     return commands;
   } catch (e) {
-    throw new Error(e);
+    logger.error(component, e);
+    return [];
   }
 }
 

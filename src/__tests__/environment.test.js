@@ -8,6 +8,7 @@ const __dirname = getDirname(import.meta.url);
 describe('Runtime environment', () => {
   test('if __dirname is correct', () => {
     expect(__dirname).toContain('__tests__');
+    expect(__dirname).toContain('src');
   });
 
   test('if config.json exists', () => {

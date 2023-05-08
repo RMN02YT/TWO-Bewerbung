@@ -41,44 +41,44 @@ export class BotLogger {
     this.levels = ['info', 'debug', 'warn', 'error'];
     this.components = ['main', 'bot', 'deploy', 'command'];
     this.logger.level = 'info';
-    this.logger.addLevel('warn', 2000, {fg: 'yellow', bold: true});
-    this.logger.addLevel('error', 2500, {fg: 'red', bold: true});
-    this.logger.addLevel('debug', 1500, {fg: 'blue', bold: true});
-    this.logger.addLevel('info', 1000, {fg: 'green', bold: true});
+    this.logger.addLevel('warn', 2000, { fg: 'yellow', bold: true });
+    this.logger.addLevel('error', 2500, { fg: 'red', bold: true });
+    this.logger.addLevel('debug', 1500, { fg: 'blue', bold: true });
+    this.logger.addLevel('info', 1000, { fg: 'green', bold: true });
     this.pstyles = [
       [
-        (x)=>{
+        (x) => {
           const now = new Date();
           return chalk.white.bold(`[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}]`) + chalk.hex('#3A86FF').bold(`[${x}]`);
         },
-        (x)=>{
+        (x) => {
           return chalk.hex('#3A86FF')(`${x}`);
         },
       ],
       [
-        (x)=>{
+        (x) => {
           const now = new Date();
           return chalk.white.bold(`[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}]`) + chalk.hex('#8338EC').bold(`[${x}]`);
         },
-        (x)=>{
+        (x) => {
           return chalk.hex('#8338EC')(`${x}`);
         },
       ],
       [
-        (x)=>{
+        (x) => {
           const now = new Date();
           return chalk.white.bold(`[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}]`) + chalk.hex('#8338EC').bold(`[${x}]`);
         },
-        (x)=>{
+        (x) => {
           return chalk.hex('#8338EC')(`${x}`);
         },
       ],
       [
-        (x)=>{
+        (x) => {
           const now = new Date();
           return chalk.white.bold(`[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}]`) + chalk.hex('#FB5607').bold(`[${x}]`);
         },
-        (x)=>{
+        (x) => {
           return chalk.hex('#FB5607')(`${x}`);
         },
       ],
@@ -101,7 +101,7 @@ export class BotLogger {
    * @info Basic log is always "info"
    * @memberof BotLogger
    */
-  info(prefix='main', message) {
+  info(prefix = 'main', message) {
     this.logger.info(this.pstyles[this.components.indexOf(prefix)][0](prefix), this.pstyles[this.components.indexOf(prefix)][1](message));
   }
 
@@ -112,7 +112,7 @@ export class BotLogger {
    * @memberof BotLogger
    * @info Debug log is always "debug"
    */
-  debug(prefix='main', message) {
+  debug(prefix = 'main', message) {
     this.logger.debug(this.pstyles[this.components.indexOf(prefix)][0](prefix), this.pstyles[this.components.indexOf(prefix)][1](message));
   }
 
@@ -123,7 +123,7 @@ export class BotLogger {
    * @memberof BotLogger
    * @info Error log is always "error"
   */
-  error(prefix='main', message) {
+  error(prefix = 'main', message) {
     this.logger.error(this.pstyles[this.components.indexOf(prefix)][0](prefix), this.pstyles[this.components.indexOf(prefix)][1](message));
   }
 
@@ -134,7 +134,7 @@ export class BotLogger {
    * @memberof BotLogger
    * @info Warning log is always "warn"
   */
-  warn(prefix='main', message) {
+  warn(prefix = 'main', message) {
     this.logger.warn(this.pstyles[this.components.indexOf(prefix)][0](prefix), this.pstyles[this.components.indexOf(prefix)][1](message));
   }
 }

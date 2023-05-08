@@ -7,7 +7,7 @@ import {deployCommands, getCommandFiles, getCommandData} from '../deploy-command
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 describe('Commands', () => {
-  const commandFiles = getCommandFiles();
+  const commandFiles = getCommandFiles(path.join(__dirname, '../', 'commands'));
 
   test('if command files can be found', () => {
     expect(commandFiles).not.toHaveLength(0);
@@ -58,8 +58,12 @@ describe('Commands', () => {
         }}).then((config) => {
       if (config.default.token!='') {
         // if token exists, test that all commands are deployed
+        // if tests are done through github actions, use environment variables instead
+        const useenv = process.env.ACTIONS==true;
         const logger = new BotLogger();
-        expect(deployCommands(true, logger)).toHaveLength(commandFiles.length);
+        deployCommands(useenv, logger).then((data) => {
+          expect(data).toHaveLength(commandFiles.length);
+        });
       }
     });
   });
