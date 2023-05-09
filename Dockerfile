@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm ci --only=production
+RUN npm ci --only=production --omit=dev
 
 COPY . /app
 

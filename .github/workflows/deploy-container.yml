@@ -63,5 +63,5 @@ jobs:
         run: |
           curl -X POST \
           -H "Content-Type: application/json" \
-          -d '{"environment": "production", "commit": "'"$GITHUB_SHA"'", "container-location": "'${{ env.REGISTRY }}/${{ github.GITHUB_REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:latest'"}' \
+          -d '{"environment": "production", "commit": "'"$GITHUB_SHA"'", "container-location": "'"$REGISTRY/$IMAGE_NAME"'"}' \
           ${{ secrets.SERVER_URL }}
