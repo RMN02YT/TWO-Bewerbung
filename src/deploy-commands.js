@@ -63,7 +63,7 @@ export async function deployCommands(useEnv = false, logger) {
   logger.info(component, `Found ${commandFiles.length} command file${commandFiles.length === 1 ? '' : 's'}`);
 
   for (const file of commandFiles) {
-    const filePath = path.join(__dirname, 'commands', file);
+    const filePath = path.join('file://', __dirname, 'commands', file);
     const commandData = await getCommandData(filePath);
     logger.info(component, `Loaded command ${commandData.name}`);
     if (commandData) {

@@ -1,16 +1,14 @@
-LABEL org.opencontainers.image.source=https://github.com/minemo/TWO-Bewerbung/
-LABEL org.opencontainers.image.description="Containerized Node.js application for the TWO Bot"
+FROM node:18
 
-FROM node:latest
+LABEL org.opencontainers.image.authors="minemo"
+LABEL org.opencontainers.image.description="Containerized Node.js application for the TWO Bot"
 
 WORKDIR /app
 
-COPY package*.json ./
-
-RUN npm install
-
 COPY . .
 
-EXPOSE 3000
+RUN npm ci --only=production
+
+COPY . /app
 
 CMD ["npm", "start"]
