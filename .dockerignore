@@ -1,0 +1,8 @@
+node_modules
+.git
+.cache
+.github
+coverage/
+src/__tests__/
+
+
